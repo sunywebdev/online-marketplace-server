@@ -191,6 +191,37 @@ async function run() {
 			res.json(result);
 			console.log("Successfully replaced order status", result);
 		});
+
+		// To store/update single gig data
+		app.put("/gigs/:id", async (req, res) => {
+			const id = req.params.id;
+			console.log("Request to update ", id);
+			const productId = { _id: ObjectId(id) };
+			const updatedReq = req.body;
+			console.log("Comming form UI", updatedReq);
+			const options = { upsert: true };
+			const updateProduct = {
+				$set: {
+					postedBy: updatedReq?.postedBy,
+					gigTitle: updatedReq?.gigTitle,
+					gigPrice: updatedReq?.gigPrice,
+					daysNeeded: updatedReq?.daysNeeded,
+					gigDescription: updatedReq?.gigDescription,
+					gigPhoto1: updatedReq?.gigPhoto1,
+					gigPhoto2: updatedReq?.gigPhoto2,
+					gigPhoto3: updatedReq?.gigPhoto3,
+					gigPhoto4: updatedReq?.gigPhoto4,
+				},
+			};
+			const result = await gigsCollection.updateOne(
+				productId,
+				updateProduct,
+				options,
+			);
+			res.json(result);
+			console.log("Updated Successfully", result);
+		});
+
 		/* ------
         ------Show all
         ------ */
