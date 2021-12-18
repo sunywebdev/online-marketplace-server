@@ -200,7 +200,7 @@ async function run() {
 			const updatedReq = req.body;
 			console.log("Comming form UI", updatedReq);
 			const options = { upsert: true };
-			const updateProduct = {
+			const updateGig = {
 				$set: {
 					postedBy: updatedReq?.postedBy,
 					gigTitle: updatedReq?.gigTitle,
@@ -215,7 +215,7 @@ async function run() {
 			};
 			const result = await gigsCollection.updateOne(
 				productId,
-				updateProduct,
+				updateGig,
 				options,
 			);
 			res.json(result);
